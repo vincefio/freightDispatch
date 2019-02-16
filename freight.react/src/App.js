@@ -1,16 +1,36 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import fire from './config/firebase.js'
 import './App.css';
 import Nav from './components/Nav.js';
 import Login from './components/Login.js';
+import Home from './components/Home.js';
 
 class App extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      user: {},
+    }
+  }
+  componentDidMount(){
+    this.authListener();
+  }
+
+  authListener(){
+    fire.auth().onAuthStateChanged((user) => {
+      if(user){
+        this.setState({ user });
+      }else{
+        this.setState({ user: null })
+      }
+    })
+  }
+  
   render() {
     return (
       <div className="App">
           <Nav />
-         <h1>WERE KILLIN THIS SHIT</h1>
-         <Login />
+    {this.state.user ? (<Home />) : (<Login />)}
  
       </div>
     );
