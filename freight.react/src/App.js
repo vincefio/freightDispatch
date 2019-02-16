@@ -30,7 +30,7 @@ class App extends Component {
     return (
       <div className="App">
           <Nav />
-    {this.state.user ? (<Home />) : (<Login />)}
+            {this.state.user ? (<Home user={this.state.user.email}/>) : (<Login />)}
  
       </div>
     );

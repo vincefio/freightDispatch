@@ -12,6 +12,7 @@ export default class Login extends Component {
 
         this.handleChange = this.handleChange.bind(this)
         this.login = this.login.bind(this)
+        this.signUp = this.signUp.bind(this)
     }
 
     handleChange(event) {
@@ -27,6 +28,17 @@ export default class Login extends Component {
             var errorCode = error.code;
             var errorMessage = error.message;
             console.log('error ' + error)
+            // ...
+          });
+    }
+
+    signUp(e){
+        e.preventDefault()
+        firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).catch(function(error) {
+            // Handle Errors here.
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            console.log(error)
             // ...
           });
     }
@@ -56,7 +68,7 @@ export default class Login extends Component {
                     
                 </div>
                 <button id='flashcard-submit' onClick={this.login} className="btn waves-effect waves-light submitButton" value="Submit">Login</button>
-                <button id='flashcard-submit' onClick={this.signup} className="btn waves-effect waves-light submitButton" >Sign Up</button>
+                <button id='flashcard-submit' onClick={this.signUp} className="btn waves-effect waves-light submitButton" >Sign Up</button>
                 </form>
                 </div>
             </div>
