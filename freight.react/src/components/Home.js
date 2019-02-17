@@ -7,6 +7,7 @@ export default class Home extends Component {
         super(props);
 
         this.signOut = this.signOut.bind(this);
+        //<img className="backgroundImg" src={Truck} alt="truck"></img>
     }
 
     signOut(){
@@ -17,7 +18,11 @@ export default class Home extends Component {
       <div>
             <header>
                 <div className="headerWrap">
-                    <img className="backgroundImg" src={Truck} alt="truck"></img>
+             
+                    <h2 className="headerText">Ship the Freight Way</h2>
+   
+                    <button id="headerButton1" className="btn header_button">Hire a Freight Company</button>
+                    <button id="headerButton2" className="btn header_button">Register Your Freight Company</button>
                 </div>
             </header>
 

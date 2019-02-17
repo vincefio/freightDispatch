@@ -12,7 +12,7 @@ export default class Nav extends Component {
     render() {
         return (
             <div>
-                <nav className='blue'>
+                <nav className='black'>
                     <div className="nav-wrapper">
                         <a className="logo">Freight Shipper</a>
                         <ul id="nav-mobile" className="right ">
