@@ -17,17 +17,17 @@ export default class Nav extends Component {
                         <a className="logo">Freight Shipper</a>
                         <ul id="nav-mobile" className="right ">
 
-                           
-                        <li className="hide-on-med-and-down">Home</li>
-                         <li className="hide-on-med-and-down">New Project</li>
-                        <li className="hide-on-med-and-down">Study</li>
+                        <li className="hide-on-med-and-down"><Link to="/">Home</Link></li>   
+                        <li className="hide-on-med-and-down"><Link to="/">Dashboard</Link></li>
+                         <li className="hide-on-med-and-down"><Link to="/">Logout</Link></li>
+                     
                             <a className='dropdown-trigger hide-on-large-only' href='#' data-target='dropdown1'><i className='material-icons'>dehaze</i></a>
                         </ul>
 
                         <ul id='dropdown1' className='dropdown-content'>
-                            <li className="">Home</li>
-                            <li className="">New Project</li>
-                            <li className="">Study</li>
+                            <li className=""><Link to="/">Home</Link></li>
+                            <li className=""><Link to="/">Dashboard</Link></li>
+                            <li className=""><Link to="/">Logout</Link></li>
                         </ul>
 
                     </div>

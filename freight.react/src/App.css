@@ -1,3 +1,17 @@
+/*******NAVSTYLING****************/
+/****************************************/
+nav{
+    padding: 0 20px;
+}
+
+nav a{
+    font-size: 1.7em;
+    font-weight: 600;
+}
+
+/*******HOME PAGE STYLING****************/
+/****************************************/
+
 .headerClass{
     position: relative;
 }
@@ -6,7 +20,7 @@
     background-image: url('./img/freightPic2.jpg');
     background-size: cover;
     background-position: center;
-    height: 75vh;
+    height: 90vh;
     opacity: .9;
 }
 
@@ -43,4 +57,9 @@
     color: orange;
     text-shadow: 4px 3px black;
     font-size: 4.3em;
+}
+
+.footer{
+    height: 1vh;
+    background-color: black;
 }

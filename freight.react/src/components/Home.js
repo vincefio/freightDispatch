@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import fire from '../config/firebase';
 import Truck from '../img/freightPic2.jpg';
+import { Link } from 'react-router-dom';
 
 export default class Home extends Component {
     constructor(props){
@@ -21,14 +22,18 @@ export default class Home extends Component {
              
                     <h2 className="headerText">Ship the Freight Way</h2>
    
-                    <button id="headerButton1" className="btn header_button">Hire a Freight Company</button>
-                    <button id="headerButton2" className="btn header_button">Register Your Company</button>
+   
+                    <button id="headerButton1" className="btn header_button"><Link to="/hire">Hire a Freight Company</Link></button>
+                    <button id="headerButton2" className="btn header_button"><Link to="/register">Register Your Company</Link></button>
                 </div>
             </header>
-
+{/* 
             <h1>WERE KILLIN THIS SHIT HOMEEEE</h1>
             <h2>Hello {this.props.user}</h2>
-            <button onClick={this.signOut}>Log Out</button>
+            <button onClick={this.signOut}>Log Out</button> */}
+            <footer className="footer">
+
+            </footer>
       </div>
     )
   }
