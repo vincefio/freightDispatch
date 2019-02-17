@@ -22,7 +22,7 @@ export default class Home extends Component {
                     <h2 className="headerText">Ship the Freight Way</h2>
    
                     <button id="headerButton1" className="btn header_button">Hire a Freight Company</button>
-                    <button id="headerButton2" className="btn header_button">Register Your Freight Company</button>
+                    <button id="headerButton2" className="btn header_button">Register Your Company</button>
                 </div>
             </header>
 

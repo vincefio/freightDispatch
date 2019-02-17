@@ -6,14 +6,17 @@
     background-image: url('./img/freightPic2.jpg');
     background-size: cover;
     background-position: center;
-    height: 80vh;
+    height: 75vh;
+    opacity: .9;
 }
 
 .header_button{
     border-radius: 20px;
-    height: 50px;
+    height: 60px;
     width: 300px;
     background-color: #5A5A5B;
+    font-weight: 525;
+    font-size: 1.1em;
 }
 
 .header_button:hover{
@@ -22,21 +25,22 @@
 
 #headerButton1{
     position: absolute;
-    top: 60%;
+    top: 52%;
     left: 22%;
 }
 
 #headerButton2{
     position: absolute;
-    top: 60%;
+    top: 52%;
     right: 22%;
 }
 
 .headerText{
     position: absolute;
-    left: 30%;
-    top: 20%;
+    left: 27%;
+    top: 23%;
     font-weight: 600;
     color: orange;
     text-shadow: 4px 3px black;
+    font-size: 4.3em;
 }
