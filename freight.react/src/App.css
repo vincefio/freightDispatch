@@ -33,6 +33,10 @@ nav a{
     font-size: 1.1em;
 }
 
+.header_button a{
+    color: white;
+}
+
 .header_button:hover{
     background-color: orange !important;
 }
@@ -62,4 +66,12 @@ nav a{
 .footer{
     height: 1vh;
     background-color: black;
+}
+
+/***********CREATE SHIPMENT PAGE*****************/
+/************************************************/
+.hireFormContainer{
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-gap: 1em;
 }
