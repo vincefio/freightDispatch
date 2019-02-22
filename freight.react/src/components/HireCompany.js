@@ -83,6 +83,28 @@ export default class HireCompany extends Component {
           <textarea onChange={this.handleChange} name="specialInstructions" id="specialInstructions" className="formInput" type="text"></textarea>
           <a class="waves-effect waves-light btn">button</a>
           </div>
+
+          <div>
+            <h4>Extra Services</h4>
+          <p>
+            <label>
+              <input type="checkbox" />
+              <span>Hazmat</span>
+            </label>
+          </p>
+          <p>
+            <label>
+              <input type="checkbox"/>
+              <span>Residential Delivery</span>
+            </label>
+          </p>
+          <p>
+            <label>
+              <input type="checkbox"/>
+              <span>Lift Gate At Delivery</span>
+            </label>
+          </p>
+          </div>
           
           
         </form>
