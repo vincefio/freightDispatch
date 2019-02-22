@@ -5,6 +5,11 @@ export default class RegisterCompany extends Component {
   componentDidMount(){
      // Get a reference to the database service
     var database = firebase.database();
+
+    database.ref('companies/' + 20).set({
+      name: 'Johnson',
+    });
+
     console.log(database.ref('companies/'))
   }
 
