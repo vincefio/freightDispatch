@@ -81,7 +81,7 @@ export default class HireCompany extends Component {
           <h4>Special Instructions</h4>
           
           <textarea onChange={this.handleChange} name="specialInstructions" id="specialInstructions" className="formInput" type="text"></textarea>
-          <a class="waves-effect waves-light btn">button</a>
+          <a className="waves-effect waves-light btn">button</a>
           </div>
 
           <div>
