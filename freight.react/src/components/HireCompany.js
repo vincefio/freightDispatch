@@ -1,5 +1,15 @@
 import React, { Component } from 'react'
 
+const formValid = formErrors => {
+  let valid = true;
+
+  Object.values(formErrors).forEach(val => {
+    val.length > 0 && (valid = false);
+  })
+
+  return valid;
+}
+
 export default class HireCompany extends Component {
   constructor(props){
     super(props)
@@ -19,7 +29,11 @@ export default class HireCompany extends Component {
         receiverZip: '',
         receiverPhone: '',
         specialInstructions: '',
-
+        formErrors: {
+          pickUpDate: '',
+          myCompanyName: '',
+          address: ''
+        }
       }
 
       this.handleChange = this.handleChange.bind(this)
@@ -29,8 +43,18 @@ export default class HireCompany extends Component {
     this.setState({
       [event.target.name]: event.target.value
     })
-
    //console.log(this.state)
+  }
+
+//handle submit
+  handleSubmit = e => {
+    e.preventDefault();
+
+    if(formValid(this.state.formErrors)){
+      console.log('submitting form')
+    }{
+      console.log('form invalid')
+    }
   }
 
   render() {
@@ -38,7 +62,7 @@ export default class HireCompany extends Component {
       <div className="container">
 
        
-<form className="hireFormContainer">
+<form onSubmit={this.handleSubmit} className="hireFormContainer">
       <div>
         <h3>My Information</h3>
           <label for="pickUpDate">Pick Up Date</label>
@@ -81,7 +105,7 @@ export default class HireCompany extends Component {
           <h4>Special Instructions</h4>
           
           <textarea onChange={this.handleChange} name="specialInstructions" id="specialInstructions" className="formInput" type="text"></textarea>
-          <a className="waves-effect waves-light btn">button</a>
+          <button className="waves-effect waves-light btn">button</button>
           </div>
 
           <div>
