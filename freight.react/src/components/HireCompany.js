@@ -39,7 +39,19 @@ export default class HireCompany extends Component {
         formErrors: {
           pickUpDate: '',
           myCompanyName: '',
-          address: ''
+          address: '',
+          city: '',
+          state: '',
+          zip: '',
+          phone: '',
+          email: '',
+          receiverCompanyName: '',
+          receiverAddress: '',
+          receiverCity: '',
+          receiverState: '',
+          receiverZip: '',
+          receiverPhone: '',
+          specialInstructions: '',
         }
       }
 
@@ -82,6 +94,13 @@ export default class HireCompany extends Component {
     case 'email':
       formErrors.email = value.length < 3 ? 'Please add a valid email' : '';
       break;
+    case 'receiverCompanyName':
+      formErrors.receiverCompanyName = value.length < 3 ? 'Please add a valid company name' : '';
+      break;
+    case 'receiverAddress':
+      formErrors.receiverAddress = value.length < 3 ? 'Please add a valid company name' : '';
+      break;
+    
     default:
       break;
    }
@@ -102,6 +121,8 @@ export default class HireCompany extends Component {
 
 
   render() {
+    const { formErrors } = this.state;
+
     return (
       <div className="container">
 
@@ -111,28 +132,58 @@ export default class HireCompany extends Component {
         <h3>My Information</h3>
           <label for="pickUpDate">Pick Up Date</label>
           <input onChange={this.handleChange} name="pickUpDate" id="pickUpDate" className="" type="text"></input>
+          {formErrors.pickUpDate.length > 0 && (
+            <span className="errorMessage" data-error="wrong" data-success="right">{formErrors.pickUpDate}</span>
+          )}
           <label for="myCompanyName">Company Name</label>
           <input onChange={this.handleChange} name="myCompanyName" id="myCompanyName" className="formInput" type="text"></input>
+          {formErrors.myCompanyName.length > 0 && (
+            <span className="errorMessage" data-error="wrong" data-success="right">{formErrors.myCompanyName}</span>
+          )}
           <label for="address">Address</label>
           <input onChange={this.handleChange} name="address" id="address" className="formInput" type="text"></input>
+          {formErrors.address.length > 0 && (
+            <span className="errorMessage" data-error="wrong" data-success="right">{formErrors.address}</span>
+          )}
           <label for="city">City</label>
           <input onChange={this.handleChange} name="city" id="city" className="formInput" type="text"></input>
+          {formErrors.city.length > 0 && (
+            <span className="errorMessage" data-error="wrong" data-success="right">{formErrors.city}</span>
+          )}
           <label for="state">State</label>
           <input onChange={this.handleChange} name="state" id="state" className="formInput" type="text"></input>
+          {formErrors.state.length > 0 && (
+            <span className="errorMessage" data-error="wrong" data-success="right">{formErrors.state}</span>
+          )}
           <label for="zip">Zip</label>
           <input onChange={this.handleChange} name="zip" id="zip" className="formInput" type="text"></input>
+          {formErrors.zip.length > 0 && (
+            <span className="errorMessage" data-error="wrong" data-success="right">{formErrors.zip}</span>
+          )}
           <label for="phone">Phone</label>
           <input onChange={this.handleChange} name="phone" id="phone" className="formInput" type="text"></input>
+          {formErrors.phone.length > 0 && (
+            <span className="errorMessage" data-error="wrong" data-success="right">{formErrors.phone}</span>
+          )}
           <label for="email">Email</label>
           <input onChange={this.handleChange} name="email" id="email" className="formInput" type="text"></input>
+          {formErrors.email.length > 0 && (
+            <span className="errorMessage" data-error="wrong" data-success="right">{formErrors.email}</span>
+          )}
           </div>
 
           <div>
         <h3>Receiver Information</h3>
           <label for="receiverCompanyName">Company Name</label>
           <input onChange={this.handleChange} name="receiverCompanyName" id="receiverCompanyName" className="formInput" type="text"></input>
+          {formErrors.receiverCompanyName.length > 0 && (
+            <span className="errorMessage" data-error="wrong" data-success="right">{formErrors.receiverCompanyName}</span>
+          )}
           <label for="receiverAddress">Address</label>
           <input onChange={this.handleChange} name="receiverAddress" id="receiverAddress" className="formInput" type="text"></input>
+          {formErrors.receiverAddress.length > 0 && (
+            <span className="errorMessage" data-error="wrong" data-success="right">{formErrors.receiverAddress}</span>
+          )}
           <label for="receiverCity">City</label>
           <input onChange={this.handleChange} name="receiverCity" id="receiverCity" className="formInput" type="text"></input>
           <label for="receiverState">State</label>
