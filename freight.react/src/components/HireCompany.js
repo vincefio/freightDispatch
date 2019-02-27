@@ -62,10 +62,25 @@ export default class HireCompany extends Component {
         formErrors.pickUpDate = dateRegex.test(value) ? '' : 'Please add a correct pickup date';
       break;
     case 'myCompanyName':
-      formErrors.myCompanyName = value.length == 0 ? 'Please add a company name' : '';
+      formErrors.myCompanyName = value.length < 3 ? 'Please add a valid company name' : '';
       break;
     case 'address':
-      formErrors.address = value.length == 0 ? 'Please add an address' : '';
+      formErrors.address = value.length < 3 ? 'Please add a valid address' : '';
+      break;
+    case 'city':
+      formErrors.city = value.length < 3 ? 'Please add a valid city' : '';
+      break;
+    case 'state':
+      formErrors.state = value.length < 3 ? 'Please add a valid state' : '';
+      break;
+    case 'zip':
+      formErrors.zip = value.length < 3 ? 'Please add a valid zip' : '';
+      break;
+    case 'phone':
+      formErrors.phone = value.length < 3 ? 'Please add a valid phone number' : '';
+      break;
+    case 'email':
+      formErrors.email = value.length < 3 ? 'Please add a valid email' : '';
       break;
     default:
       break;
