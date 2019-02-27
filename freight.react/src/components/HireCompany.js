@@ -1,10 +1,17 @@
 import React, { Component } from 'react'
 
+const dateRegex = RegExp(/^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[13-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$/)
+
 const formValid = formErrors => {
   let valid = true;
-
+  console.log('form valid hit')
   Object.values(formErrors).forEach(val => {
-    val.length > 0 && (valid = false);
+    //val.length > 0 && (valid = false);
+    if(val.length > 0){
+      console.log('we have an error')
+      valid = false;
+    }
+    
   })
 
   return valid;
@@ -44,6 +51,27 @@ export default class HireCompany extends Component {
       [event.target.name]: event.target.value
     })
    //console.log(this.state)
+   const { name, value } = event.target;
+   let formErrors = this.state.formErrors;
+
+   //console.log('name ' + name + ' value ' + value)
+
+   switch(name){
+     case 'pickUpDate':
+        //console.log(value)
+        formErrors.pickUpDate = dateRegex.test(value) ? '' : 'Please add a correct pickup date';
+      break;
+    case 'myCompanyName':
+      formErrors.myCompanyName = value.length == 0 ? 'Please add a company name' : '';
+      break;
+    case 'address':
+      formErrors.address = value.length == 0 ? 'Please add an address' : '';
+      break;
+    default:
+      break;
+   }
+
+   this.setState({ formErrors, [name]: value }, () => console.log(this.state))
   }
 
 //handle submit
@@ -52,10 +80,11 @@ export default class HireCompany extends Component {
 
     if(formValid(this.state.formErrors)){
       console.log('submitting form')
-    }{
+    }else{
       console.log('form invalid')
     }
   }
+
 
   render() {
     return (
@@ -105,7 +134,7 @@ export default class HireCompany extends Component {
           <h4>Special Instructions</h4>
           
           <textarea onChange={this.handleChange} name="specialInstructions" id="specialInstructions" className="formInput" type="text"></textarea>
-          <button className="waves-effect waves-light btn">button</button>
+          <button className="btn">button</button>
           </div>
 
           <div>
