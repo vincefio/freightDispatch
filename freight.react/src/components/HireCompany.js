@@ -17,6 +17,20 @@ const formValid = formErrors => {
   return valid;
 }
 
+async function validate(formErrors){
+    await validateSync();
+
+    formValid(formErrors);
+}
+
+function validateSync(){
+  if(formValid(this.state.formErrors)){
+    console.log('submitting form')
+  }else{
+    console.log('form invalid')
+  }
+}
+
 export default class HireCompany extends Component {
   constructor(props){
     super(props)
@@ -100,12 +114,25 @@ export default class HireCompany extends Component {
     case 'receiverAddress':
       formErrors.receiverAddress = value.length < 3 ? 'Please add a valid company name' : '';
       break;
+    case 'receiverCity':
+      formErrors.receiverCity = value.length < 3 ? 'Please add a valid city name' : '';
+      break;
+    case 'receiverState':
+      formErrors.receiverState = value.length < 3 ? 'Please add a valid state name' : '';
+      break; 
+    case 'receiverZip':
+      formErrors.receiverZip = value.length < 3 ? 'Please add a valid zip code' : '';
+      break;   
+    case 'receiverPhone':
+      formErrors.receiverPhone = value.length < 3 ? 'Please add a valid phone number' : '';
+    break;
     
     default:
       break;
    }
 
    this.setState({ formErrors, [name]: value }, () => console.log(this.state))
+
   }
 
 //handle submit
@@ -118,6 +145,7 @@ export default class HireCompany extends Component {
       console.log('form invalid')
     }
   }
+
 
 
   render() {
@@ -186,12 +214,24 @@ export default class HireCompany extends Component {
           )}
           <label for="receiverCity">City</label>
           <input onChange={this.handleChange} name="receiverCity" id="receiverCity" className="formInput" type="text"></input>
+          {formErrors.receiverCity.length > 0 && (
+            <span className="errorMessage" data-error="wrong" data-success="right">{formErrors.receiverCity}</span>
+          )}
           <label for="receiverState">State</label>
           <input onChange={this.handleChange} name="receiverState" id="receiverState" className="formInput" type="text"></input>
+          {formErrors.receiverCity.length > 0 && (
+            <span className="errorMessage" data-error="wrong" data-success="right">{formErrors.receiverCity}</span>
+          )}
           <label for="receiverZip">Zip</label>
           <input onChange={this.handleChange} name="receiverZip" id="receiverZip" className="formInput" type="text"></input>
+          {formErrors.receiverZip.length > 0 && (
+            <span className="errorMessage" data-error="wrong" data-success="right">{formErrors.receiverZip}</span>
+          )}
           <label for="receiverPhone">Phone</label>
           <input onChange={this.handleChange} name="receiverPhone" id="receiverPhone" className="formInput" type="text"></input>
+          {formErrors.receiverPhone.length > 0 && (
+            <span className="errorMessage" data-error="wrong" data-success="right">{formErrors.receiverPhone}</span>
+          )}
 
           </div>
 
