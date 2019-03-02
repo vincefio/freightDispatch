@@ -30,8 +30,11 @@ export default class RegisterCompany extends Component {
 
   render() {
     return (
-      <div>
-        <h1>REGISTER COMPANY</h1>
+      <div className="container">
+        <h3>REGISTER COMPANY</h3>
+          <label for="registerCompanyName">Company Name</label>
+          <input  name="registerCompanyName" id="registerCompanyName" className="" type="text"></input>
+  
       </div>
     )
   }
