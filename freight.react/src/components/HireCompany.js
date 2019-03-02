@@ -17,19 +17,19 @@ const formValid = formErrors => {
   return valid;
 }
 
-async function validate(formErrors){
-    await validateSync();
+// async function validate(formErrors){
+//     await validateSync();
 
-    formValid(formErrors);
-}
+//     formValid(formErrors);
+// }
 
-function validateSync(){
-  if(formValid(this.state.formErrors)){
-    console.log('submitting form')
-  }else{
-    console.log('form invalid')
-  }
-}
+// function validateSync(){
+//   if(formValid(this.state.formErrors)){
+//     console.log('submitting form')
+//   }else{
+//     console.log('form invalid')
+//   }
+// }
 
 export default class HireCompany extends Component {
   constructor(props){
@@ -97,7 +97,7 @@ export default class HireCompany extends Component {
       formErrors.city = value.length < 3 ? 'Please add a valid city' : '';
       break;
     case 'state':
-      formErrors.state = value.length < 3 ? 'Please add a valid state' : '';
+      formErrors.state = value.length < 2 ? 'Please add a valid state' : '';
       break;
     case 'zip':
       formErrors.zip = value.length < 3 ? 'Please add a valid zip' : '';
@@ -118,7 +118,7 @@ export default class HireCompany extends Component {
       formErrors.receiverCity = value.length < 3 ? 'Please add a valid city name' : '';
       break;
     case 'receiverState':
-      formErrors.receiverState = value.length < 3 ? 'Please add a valid state name' : '';
+      formErrors.receiverState = value.length < 2 ? 'Please add a valid state name' : '';
       break; 
     case 'receiverZip':
       formErrors.receiverZip = value.length < 3 ? 'Please add a valid zip code' : '';

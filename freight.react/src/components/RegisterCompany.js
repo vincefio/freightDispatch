@@ -1,6 +1,21 @@
 import React, { Component } from 'react'
 import firebase from 'firebase'
+import Company from '../classes/companyClass'
 
+const formValid = formErrors => {
+  let valid = true;
+  console.log('form valid hit')
+  Object.values(formErrors).forEach(val => {
+    //val.length > 0 && (valid = false);
+    if(val.length > 0){
+      console.log('we have an error')
+      valid = false;
+    }
+    
+  })
+
+  return valid;
+}
 
 export default class RegisterCompany extends Component {
   constructor(props){
@@ -11,12 +26,15 @@ export default class RegisterCompany extends Component {
       registerCompanyCity: '',
       registerCompanyState: '',
       registerCompanyZip: '',
+      deliveryTrucks: null,
+      numberOfTrucks: 0,
       formErrors: {
         registerCompanyName: '',
         registerCompanyAddress: '',
         registerCompanyCity: '',
         registerCompanyState: '',
         registerCompanyZip: '',
+        
       }
     }
   }
@@ -28,7 +46,7 @@ export default class RegisterCompany extends Component {
   }
 
   handleChange = (event) => {
-    console.log(event.target.value)
+    //console.log(event.target.value)
     this.setState({
       [event.target.name]: event.target.value
     })
@@ -51,10 +69,16 @@ export default class RegisterCompany extends Component {
         formErrors.registerCompanyCity = value.length < 3 ? 'Please add a valid city' : '';
         break;
       case 'registerCompanyState':
-        formErrors.registerCompanyState = value.length < 3 ? 'Please add a valid state' : '';
+        formErrors.registerCompanyState = value.length < 2 ? 'Please add a valid state' : '';
         break;
       case 'registerCompanyZip':
         formErrors.registerCompanyZip = value.length < 3 ? 'Please add a valid zip' : '';
+        break;
+      case 'deliveryTrucks':
+          //console.log(document.getElementById('deliveryTrucks').checked)
+          this.setState({
+            [event.target.name]: document.getElementById('deliveryTrucks').checked
+          })
         break;
       default:
         break;
@@ -65,9 +89,20 @@ export default class RegisterCompany extends Component {
   handleSubmit = (event) => {
     event.preventDefault()
     //console.log(this.state)
+    const state = this.state
     
     //Validate form
- 
+    if(formValid(this.state.formErrors)){
+      console.log('submitting form')
+
+      //create new Company obj
+      const company = new Company(state.registerCompanyName, state.registerCompanyAddress, state.registerCompanyCity,
+        state.registerCompanyState, state.registerCompanyZip, state.deliveryTrucks, state.numberOfTrucks)
+
+      console.log(company)
+    }else{
+      console.log('form invalid')
+    }
   }
 
 
@@ -103,6 +138,24 @@ export default class RegisterCompany extends Component {
             {
               formErrors.registerCompanyZip ? <span className="errorMessage" data-error="wrong" data-success="right">{formErrors.registerCompanyZip}</span> : ''
             }
+            <p>
+            <h5>Does Your company have trucks to deliver with?</h5>
+            <label>
+              <input onChange={this.handleChange} id="deliveryTrucks" name="deliveryTrucks" type="checkbox" />
+              <span>Yes</span>
+            </label>
+            </p>
+
+            {
+              this.state.deliveryTrucks ? 
+              <div>
+              <label for="numberOfTrucks">Number Of Trucks</label>
+              <input onChange={this.handleChange} value={this.state.numberOfTrucks} name="numberOfTrucks" id="numberOfTrucks" className="formInput" type="text"></input>
+              </div>
+              :
+              ''
+            }
+
             <button className="button">Submit</button>
           </form>
       </div>
