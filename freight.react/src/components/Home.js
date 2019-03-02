@@ -25,7 +25,7 @@ export default class Home extends Component {
    
                     <button id="headerButton1" className="btn header_button"><Link to="/hire">Hire a Freight Company</Link></button>
                     <button id="headerButton2" className="btn header_button"><Link to="/register">Register Your Company</Link></button>
-                    <button onClick={this.signOut} id="headerButton3" className="btn header_button">Sign Out</button>
+                    {/* <button onClick={this.signOut} id="headerButton3" className="btn header_button">Sign Out</button> */}
                 </div>
             </header>
 {/* 

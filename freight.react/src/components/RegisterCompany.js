@@ -4,7 +4,7 @@ import Company from '../classes/companyClass'
 
 const formValid = formErrors => {
   let valid = true;
-  console.log('form valid hit')
+  //console.log('form valid hit')
   Object.values(formErrors).forEach(val => {
     //val.length > 0 && (valid = false);
     if(val.length > 0){

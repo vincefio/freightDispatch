@@ -7,6 +7,7 @@ import Login from './components/Login.js';
 import Home from './components/Home.js';
 import RegisterCompany from './components/RegisterCompany.js'
 import HireCompany from './components/HireCompany.js'
+import Dashboard from './components/Dashboard.js'
 
 class App extends Component {
   constructor(props){
@@ -32,21 +33,27 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-          <Nav />
+          <Nav user={this.state.user}/>
             {/* {this.state.user ? (<Home user={this.state.user.email}/>) : (<Login />)} */}
  
         {/* <Route exact path='/' component={Home} /> */}
         {
           !this.state.user &&
             <Route exact path='/' component={Login} />
+            
         }
         {
           this.state.user && 
             <Route exact path='/' component={Home} />
         }
+        {
+          !this.state.user && 
+            <Route exact path='/dashboard' component={Login} />
+        }
         <Route exact path="/register" component={RegisterCompany} />
         <Route exact path="/hire" component={HireCompany} />
         <Route exact path="/login" component={Login} />
+        <Route exact path="/dashboard" component={Dashboard} />
       </div>
     );
   }

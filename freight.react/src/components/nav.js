@@ -22,30 +22,41 @@ export default class Nav extends Component {
     }
 
     render() {
-        return (
-            <div>
+        if(this.props.user){
+            return (
+                <div>
+                    <nav className='black'>
+                        <div className="nav-wrapper">
+                            <a className="logo">Freight Shipper</a>
+                            <ul id="nav-mobile" className="right ">
+    
+                            <li className="hide-on-med-and-down"><Link to="/">Home</Link></li>   
+                            <li className="hide-on-med-and-down"><Link to="/dashboard">Dashboard</Link></li>
+                        {/*for the logout we need to change the state of the parent */}
+                             <li onClick={this.signOut} className="hide-on-med-and-down"><Link to="/">Logout</Link></li>
+                         
+                                <a className='dropdown-trigger hide-on-large-only' href='#' data-target='dropdown1'><i className='material-icons'>dehaze</i></a>
+                            </ul>
+    
+                            <ul id='dropdown1' className='dropdown-content'>
+                                <li className=""><Link to="/">Home</Link></li>
+                                <li className=""><Link to="/dashboard">Dashboard</Link></li>
+                                <li onClick={this.signOut} className=""><Link to="/">Logout</Link></li>
+                            </ul>
+    
+                        </div>
+                    </nav>
+                </div>
+            )
+        }else{
+            return(
                 <nav className='black'>
-                    <div className="nav-wrapper">
-                        <a className="logo">Freight Shipper</a>
-                        <ul id="nav-mobile" className="right ">
+                        <div className="nav-wrapper">
+                            <a className="logo">Freight Shipper</a>
+                        </div>
+                    </nav>
+            )
+        }
 
-                        <li className="hide-on-med-and-down"><Link to="/">Home</Link></li>   
-                        <li className="hide-on-med-and-down"><Link to="/">Dashboard</Link></li>
-                    {/*for the logout we need to change the state of the parent */}
-                         <li className="hide-on-med-and-down"><Link to="/">Logout</Link></li>
-                     
-                            <a className='dropdown-trigger hide-on-large-only' href='#' data-target='dropdown1'><i className='material-icons'>dehaze</i></a>
-                        </ul>
-
-                        <ul id='dropdown1' className='dropdown-content'>
-                            <li className=""><Link to="/">Home</Link></li>
-                            <li className=""><Link to="/">Dashboard</Link></li>
-                            <li className=""><Link to="/">Dashboard</Link></li>
-                        </ul>
-
-                    </div>
-                </nav>
-            </div>
-        )
     }
 }
