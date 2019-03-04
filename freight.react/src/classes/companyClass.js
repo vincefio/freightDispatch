@@ -1,5 +1,6 @@
 export default class Company{
-    constructor(name, address, city, state, zip, deliveryTrucks, numberOfTrucks){
+    constructor(id, name, address, city, state, zip, deliveryTrucks, numberOfTrucks){
+        this.id = id;
         this.name = name;
         this.address = address;
         this.city = city;

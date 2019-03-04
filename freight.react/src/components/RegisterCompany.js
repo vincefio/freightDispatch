@@ -17,8 +17,10 @@ const formValid = formErrors => {
   return valid;
 }
 
+
 export default class RegisterCompany extends Component {
   constructor(props){
+    
     super(props)
     this.state = {
       registerCompanyName: '',
@@ -39,10 +41,12 @@ export default class RegisterCompany extends Component {
     }
   }
 
-  componentDidMount(){
+  componentDidMount(props){
      // Get a reference to the database service
     //var database = firebase.database();
-    var database = firebase.firestore();
+    
+
+    //console.log(this.props.user.uid)
   }
 
   handleChange = (event) => {
@@ -96,18 +100,50 @@ export default class RegisterCompany extends Component {
       console.log('submitting form')
 
       //create new Company obj
-      const company = new Company(state.registerCompanyName, state.registerCompanyAddress, state.registerCompanyCity,
+      //the company obj is not in use, but i'm happy i learned to use classes in this project
+      //my whole level of JS has increased, and understanding more about classes and modules 
+      //has increased my understanding of React 
+      const company = new Company(this.props.user.uid, state.registerCompanyName, state.registerCompanyAddress, state.registerCompanyCity,
         state.registerCompanyState, state.registerCompanyZip, state.deliveryTrucks, state.numberOfTrucks)
 
-      console.log(company)
+      this.writeUserData(state.registerCompanyName, state.registerCompanyAddress, state.registerCompanyCity,
+        state.registerCompanyState, state.registerCompanyZip, state.deliveryTrucks, state.numberOfTrucks)
+
+
+      //console.log(company)
     }else{
       console.log('form invalid')
     }
   }
 
+  writeUserData = (name, address, city, state, zip, deliveryTrucks, numberOfTrucks) => {
+    console.log(this.props.user.uid)
+    var company = {
+      name: name,
+      address: address,
+      city: city,
+      state: state,
+      zip: zip,
+      deliveryTrucks: deliveryTrucks,
+      numberOfTrucks: numberOfTrucks,
+    }
+    var database = firebase.firestore();
+
+    database.collection('companies').doc(this.props.user.uid).set(company)
+    .then(function(docRef) {
+      //console.log("Document written with ID: ", docRef.id);
+      console.log('doc saved to db')
+      
+    })
+    .catch(function(error) {
+      console.error("Error adding document: ", error);
+    });
+  }
+
 
   render() {
     const { formErrors } = this.state
+   
     
     return (
       <div className="container">
@@ -138,13 +174,13 @@ export default class RegisterCompany extends Component {
             {
               formErrors.registerCompanyZip ? <span className="errorMessage" data-error="wrong" data-success="right">{formErrors.registerCompanyZip}</span> : ''
             }
-            <p>
+            <div>
             <h5>Does Your company have trucks to deliver with?</h5>
             <label>
               <input onChange={this.handleChange} id="deliveryTrucks" name="deliveryTrucks" type="checkbox" />
               <span>Yes</span>
             </label>
-            </p>
+            </div>
 
             {
               this.state.deliveryTrucks ? 

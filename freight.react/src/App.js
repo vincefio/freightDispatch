@@ -18,6 +18,7 @@ class App extends Component {
   }
   componentDidMount(){
     this.authListener();
+
   }
 
   authListener(){
@@ -31,6 +32,7 @@ class App extends Component {
   }
   
   render() {
+    const { user } = this.state
     return (
       <div className="App">
           <Nav user={this.state.user}/>
@@ -46,11 +48,8 @@ class App extends Component {
           this.state.user && 
             <Route exact path='/' component={Home} />
         }
-        {
-          !this.state.user && 
-            <Route exact path='/dashboard' component={Login} />
-        }
-        <Route exact path="/register" component={RegisterCompany} />
+
+        <Route exact path="/register" render={(props) => <RegisterCompany user={user}/>} />
         <Route exact path="/hire" component={HireCompany} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/dashboard" component={Dashboard} />
