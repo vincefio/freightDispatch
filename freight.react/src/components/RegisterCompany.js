@@ -110,7 +110,7 @@ export default class RegisterCompany extends Component {
         state.registerCompanyState, state.registerCompanyZip, state.deliveryTrucks, state.numberOfTrucks)
 
 
-      //console.log(company)
+      //console.log(company)/
     }else{
       console.log('form invalid')
     }
