@@ -129,7 +129,7 @@ export default class HireCompany extends Component {
     if(formValid(this.state.formErrors)){
       console.log('submitting form')
 
-      //create an object from state
+      //create an object from state/
       const stateMinusErrors = this.state
       delete stateMinusErrors.formErrors
 
