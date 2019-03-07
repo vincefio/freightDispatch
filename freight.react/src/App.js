@@ -50,7 +50,8 @@ class App extends Component {
         }
 
         <Route exact path="/register" render={(props) => <RegisterCompany user={user}/>} />
-        <Route exact path="/hire" component={HireCompany} />
+        <Route exact path="/hire" render={(props) => <HireCompany user={user}/>} />
+        {/* <Route exact path="/hire" component={HireCompany} /> */}
         <Route exact path="/login" component={Login} />
         <Route exact path="/dashboard" component={Dashboard} />
       </div>

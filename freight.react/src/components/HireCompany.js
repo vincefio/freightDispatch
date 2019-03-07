@@ -130,26 +130,48 @@ export default class HireCompany extends Component {
       console.log('submitting form')
 
       //create an object from state/
-      const stateMinusErrors = this.state
-      delete stateMinusErrors.formErrors
+      //const stateMinusErrors = this.state
+      //delete stateMinusErrors.formErrors
 
-      console.log(stateMinusErrors)
+
+      this.writeHireData(this.state.pickUpDate, this.state.myCompanyName, this.state.address, this.state.city, this.state.state,
+        this.state.zip, this.state.phone, this.state.email, this.state.receiverName, this.state.receiverAddress, this.state.receiverCity,
+        this.state.receiverState, this.state.receiverZip, this.state.receiverPhone, this.state.specialInstructions)
+
+      //console.log(stateMinusErrors)
     }else{
       console.log('form invalid')
     }
   }
 
-  writeHireData = (name, address, city, state, zip, deliveryTrucks, numberOfTrucks) => {
+  writeHireData = (pickUpDate, myCompanyName, address, city, state, zip, phone, email, 
+    receiverName, receiverAddress, receiverCity, receiverState, receiverZip, receiverPhone, specialInstructions) => {
+
     //console.log(this.props.user.uid)
-    var company = {
-      name: name,
-      address: address,
-      city: city,
-      state: state,
-      zip: zip,
-      deliveryTrucks: deliveryTrucks,
-      numberOfTrucks: numberOfTrucks,
+    console.log(pickUpDate)
+    var order = {
+      pickUpDate,
+      myCompanyName,
+      address,
+      city,
+      state,
+      zip,
+      phone,
+      email,
+      receiverName,
+      receiverAddress,
+      receiverCity,
+      receiverState,
+      receiverZip,
+      receiverPhone,
+      specialInstructions
     }
+
+    console.log('ORDER ' + JSON.stringify(order))
+    //order object
+    //this order needs to be saved in the orders table, so it can be seen by other companies
+    //also needs to have reference, or i can just name the document the title of the company, or user id
+
     //var database = firebase.firestore();
 
     // database.collection('companies').doc(this.props.user.uid).set(company)
