@@ -76,6 +76,13 @@ nav a{
     grid-gap: 1em;
 }
 
+@media(max-width: 700px){
+    .hireFormContainer{
+        grid-template-columns: 1fr;
+    }
+    
+}
+
 .errorMessage{
     color: red;
     display: block;

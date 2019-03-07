@@ -17,19 +17,6 @@ const formValid = formErrors => {
   return valid;
 }
 
-// async function validate(formErrors){
-//     await validateSync();
-
-//     formValid(formErrors);
-// }
-
-// function validateSync(){
-//   if(formValid(this.state.formErrors)){
-//     console.log('submitting form')
-//   }else{
-//     console.log('form invalid')
-//   }
-// }
 
 export default class HireCompany extends Component {
   constructor(props){
@@ -131,7 +118,7 @@ export default class HireCompany extends Component {
       break;
    }
 
-   this.setState({ formErrors, [name]: value }, () => console.log(this.state))
+   this.setState({ formErrors, [name]: value })
 
   }
 
@@ -141,9 +128,39 @@ export default class HireCompany extends Component {
 
     if(formValid(this.state.formErrors)){
       console.log('submitting form')
+
+      //create an object from state
+      const stateMinusErrors = this.state
+      delete stateMinusErrors.formErrors
+
+      console.log(stateMinusErrors)
     }else{
       console.log('form invalid')
     }
+  }
+
+  writeHireData = (name, address, city, state, zip, deliveryTrucks, numberOfTrucks) => {
+    //console.log(this.props.user.uid)
+    var company = {
+      name: name,
+      address: address,
+      city: city,
+      state: state,
+      zip: zip,
+      deliveryTrucks: deliveryTrucks,
+      numberOfTrucks: numberOfTrucks,
+    }
+    //var database = firebase.firestore();
+
+    // database.collection('companies').doc(this.props.user.uid).set(company)
+    // .then(function(docRef) {
+    //   //console.log("Document written with ID: ", docRef.id);
+    //   console.log('doc saved to db')
+      
+    // })
+    // .catch(function(error) {
+    //   console.error("Error adding document: ", error);
+    // });
   }
 
 
@@ -236,14 +253,6 @@ export default class HireCompany extends Component {
           </div>
 
           <div>
-
-          <h4>Special Instructions</h4>
-          
-          <textarea onChange={this.handleChange} name="specialInstructions" id="specialInstructions" className="formInput" type="text"></textarea>
-          <button className="btn">button</button>
-          </div>
-
-          <div>
             <h4>Extra Services</h4>
           <p>
             <label>
@@ -263,6 +272,14 @@ export default class HireCompany extends Component {
               <span>Lift Gate At Delivery</span>
             </label>
           </p>
+          </div>
+
+          <div>
+
+          <h4>Special Instructions</h4>
+
+          <textarea onChange={this.handleChange} name="specialInstructions" id="specialInstructions" className="formInput" type="text"></textarea>
+          <button className="btn">Submit</button>
           </div>
           
           
