@@ -30,13 +30,14 @@ export default class RegisterCompany extends Component {
       registerCompanyZip: '',
       deliveryTrucks: null,
       numberOfTrucks: 0,
+      costPerMile: 0,
       formErrors: {
         registerCompanyName: '',
         registerCompanyAddress: '',
         registerCompanyCity: '',
         registerCompanyState: '',
         registerCompanyZip: '',
-        
+        costPerMile: '',
       }
     }
   }
@@ -83,6 +84,12 @@ export default class RegisterCompany extends Component {
           this.setState({
             [event.target.name]: document.getElementById('deliveryTrucks').checked
           })
+        break;
+      case 'costPerMile':
+          console.log('input hit')
+        var r = /^\$?[0-9]+(\.[0-9][0-9])?$/;
+        console.log(r.test(value));  //true
+        formErrors.costPerMile = !r.test(value) ? 'Please add a valid price (check formatting)' : '';
         break;
       default:
         break;
@@ -187,6 +194,11 @@ export default class RegisterCompany extends Component {
               <div>
               <label for="numberOfTrucks">Number Of Trucks</label>
               <input onChange={this.handleChange} value={this.state.numberOfTrucks} name="numberOfTrucks" id="numberOfTrucks" className="formInput" type="text"></input>
+              <label for="costPerMile">Cost Per Mile ex. $1.52</label>
+              <input onChange={this.handleChange} value={this.state.costPerMile} name="costPerMile" id="costPerMile" className="formInput" type="text"></input>
+              {
+              formErrors.costPerMile ? <span className="errorMessage" data-error="wrong" data-success="right">{formErrors.costPerMile}</span> : ''
+              }
               </div>
               :
               ''
