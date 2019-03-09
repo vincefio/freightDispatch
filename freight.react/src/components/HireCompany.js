@@ -24,6 +24,7 @@ export default class HireCompany extends Component {
   constructor(props){
     super(props)
       this.state = {
+        userUid: this.props.user.uid,
         pickUpDate: '',
         myCompanyName: '',
         address: '',
@@ -140,7 +141,7 @@ export default class HireCompany extends Component {
       //delete stateMinusErrors.formErrors
 
 
-      this.writeHireData(this.state.pickUpDate, this.state.myCompanyName, this.state.address, this.state.city, this.state.state,
+      this.writeHireData(this.state.userUid, this.state.pickUpDate, this.state.myCompanyName, this.state.address, this.state.city, this.state.state,
         this.state.zip, this.state.phone, this.state.email, this.state.receiverCompanyName, this.state.receiverAddress, this.state.receiverCity,
         this.state.receiverState, this.state.receiverZip, this.state.receiverPhone, this.state.specialInstructions)
 
@@ -153,12 +154,13 @@ export default class HireCompany extends Component {
     }
   }
 
-  writeHireData = (pickUpDate, myCompanyName, address, city, state, zip, phone, email, 
+  writeHireData = (uid, pickUpDate, myCompanyName, address, city, state, zip, phone, email, 
     receiverCompanyName, receiverAddress, receiverCity, receiverState, receiverZip, receiverPhone, specialInstructions) => {
 
     //console.log(this.props.user.uid)
     console.log(pickUpDate)
     var order = {
+      userUid: uid,
       pickUpDate,
       myCompanyName,
       address,
@@ -180,8 +182,8 @@ export default class HireCompany extends Component {
     //also needs to have reference, or i can just name the document the title of the company, or user id
 
     var database = firebase.firestore();
-
-    database.collection('orders').doc(this.props.user.uid).set(order)
+    //user id is
+    database.collection('orders').doc().set(order)
     .then((docRef) => {
       //console.log("Document written with ID: ", docRef.id);
       console.log('doc saved to db')
