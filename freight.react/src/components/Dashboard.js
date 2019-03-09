@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import firebase from 'firebase'
+import M from 'materialize-css'
 
 export default class Dashboard extends Component {
   constructor(props){
@@ -10,6 +11,8 @@ export default class Dashboard extends Component {
   }
 
   componentDidMount(){
+    var elems = document.querySelectorAll('.collapsible');
+    M.Collapsible.init(elems, {});
     //get current orders from db
     var database = firebase.firestore();
     //console.log(this.props.user.uid)
@@ -35,9 +38,22 @@ export default class Dashboard extends Component {
   }
 
   render() {
+    const myOrders = this.state.myOrders.map(order => 
+      <li key={order.receiverCompanyName}>
+      <div class="collapsible-header">PickUp Date: {order.pickUpDate}</div>
+      <div class="collapsible-body">
+      <span>{order.myCompanyName + ' to ' + order.receiverCompanyName}</span>
+      </div>
+    </li>
+    )
+
     return (
       <div>
         <h1>DASHBOARD</h1>
+        <ul className="collapsible">
+          { myOrders }
+        </ul>
+
       </div>
     )
   }

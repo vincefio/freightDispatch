@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router'
 import firebase from 'firebase'
+import axios from 'axios'
 
 const dateRegex = RegExp(/^(0[1-9]|1[0-2])\/(0[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$/)
 
@@ -59,6 +60,7 @@ export default class HireCompany extends Component {
           specialInstructions: '',
         },
         redirect: false,
+        costPerMile: '',
       }
 
       this.handleChange = this.handleChange.bind(this)
@@ -142,8 +144,8 @@ export default class HireCompany extends Component {
 
 
       this.writeHireData(this.state.userUid, this.state.pickUpDate, this.state.myCompanyName, this.state.address, this.state.city, this.state.state,
-        this.state.zip, this.state.phone, this.state.email, this.state.receiverCompanyName, this.state.receiverAddress, this.state.receiverCity,
-        this.state.receiverState, this.state.receiverZip, this.state.receiverPhone, this.state.specialInstructions)
+        this.state.zip, this.state.receiverCompanyName, this.state.receiverAddress, this.state.receiverCity,
+        this.state.receiverState, this.state.receiverZip, this.state.specialInstructions)
 
       //console.log(stateMinusErrors)
     }else{
@@ -154,8 +156,9 @@ export default class HireCompany extends Component {
     }
   }
 
-  writeHireData = (uid, pickUpDate, myCompanyName, address, city, state, zip, phone, email, 
-    receiverCompanyName, receiverAddress, receiverCity, receiverState, receiverZip, receiverPhone, specialInstructions) => {
+  writeHireData = async (uid, pickUpDate, myCompanyName, address, city, state, zip,
+    receiverCompanyName, receiverAddress, receiverCity, receiverState, receiverZip, specialInstructions) => {
+
 
     //console.log(this.props.user.uid)
     console.log(pickUpDate)
@@ -172,7 +175,8 @@ export default class HireCompany extends Component {
       receiverCity,
       receiverState,
       receiverZip,
-      specialInstructions
+      specialInstructions,
+      
     }
 
     console.log('ORDER ' + JSON.stringify(order))
@@ -183,7 +187,7 @@ export default class HireCompany extends Component {
 
     var database = firebase.firestore();
     //user id is
-    database.collection('orders').doc().set(order)
+  database.collection('orders').doc().set(order)
     .then((docRef) => {
       //console.log("Document written with ID: ", docRef.id);
       console.log('doc saved to db')

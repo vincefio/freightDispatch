@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import firebase from 'firebase'
 import Company from '../classes/companyClass'
+import { Redirect } from 'react-router'
 
 const formValid = formErrors => {
   let valid = true;
@@ -23,6 +24,8 @@ export default class RegisterCompany extends Component {
     
     super(props)
     this.state = {
+      user: false,
+      name: '',
       registerCompanyName: '',
       registerCompanyAddress: '',
       registerCompanyCity: '',
@@ -31,6 +34,7 @@ export default class RegisterCompany extends Component {
       deliveryTrucks: null,
       numberOfTrucks: 0,
       costPerMile: 0,
+      redirect: false,
       formErrors: {
         registerCompanyName: '',
         registerCompanyAddress: '',
@@ -44,8 +48,27 @@ export default class RegisterCompany extends Component {
 
   componentDidMount(props){
      // Get a reference to the database service
-    //var database = firebase.database();
-    
+    var database = firebase.firestore();
+    //check firebase to see if there is a company with name of this.props.user.uid
+    console.log(this.props.user.uid)
+    var docRef = database.collection("companies").doc(this.props.user.uid);
+
+    docRef.get().then((doc) => {
+        if (doc.exists) {
+            console.log("Document data:", doc.data());
+            console.log("Document data:", doc.data().name);
+          
+            this.setState({
+              user: true,
+              name: doc.data().name,
+            })
+        } else {
+            // doc.data() will be undefined in this case
+            console.log("No such document!");
+        }
+    }).catch(function(error) {
+        console.log("Error getting document:", error);
+    });
 
     //console.log(this.props.user.uid)
   }
@@ -91,6 +114,11 @@ export default class RegisterCompany extends Component {
         //console.log(r.test(value));  //true
         formErrors.costPerMile = !r.test(value) ? 'Please add a valid price (check formatting)' : '';
         break;
+      case 'updateInfo':
+          this.setState({
+            user: false,
+          })
+          break;
       default:
         break;
     }
@@ -138,10 +166,14 @@ export default class RegisterCompany extends Component {
     var database = firebase.firestore();
 
     database.collection('companies').doc(this.props.user.uid).set(company)
-    .then(function(docRef) {
+    .then((docRef) => {
       //console.log("Document written with ID: ", docRef.id);
       console.log('doc saved to db')
-      
+
+      //redirect to dashboard
+      this.setState({
+        redirect: true,
+      })
     })
     .catch(function(error) {
       console.error("Error adding document: ", error);
@@ -151,9 +183,27 @@ export default class RegisterCompany extends Component {
 
   render() {
     const { formErrors } = this.state
-   
-    
+
+    if(this.state.redirect){
+      return <Redirect to="/dashboard" />
+    }
+
+    if(this.state.user){
+      console.log(this.props)
+        return(
+          <div className="container">
+            <h2>You are currently registered as {this.state.name}</h2>
+            <h3>Would you like to update company information?</h3>
+            <label>
+              <input onChange={this.handleChange} id="updateInfo" name="updateInfo" type="checkbox" />
+              <span>Yes</span>
+            </label>
+          </div>
+        )
+    }
+    else{
     return (
+
       <div className="container">
         <h3>REGISTER COMPANY</h3>
           <form onSubmit={this.handleSubmit}>
@@ -209,5 +259,6 @@ export default class RegisterCompany extends Component {
           </form>
       </div>
     )
+    }
   }
 }
