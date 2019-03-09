@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import { Redirect } from 'react-router'
+import firebase from 'firebase'
 
 const dateRegex = RegExp(/^(0[1-9]|1[0-2])\/(0[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$/)
 
@@ -37,6 +39,7 @@ export default class HireCompany extends Component {
         receiverZip: '',
         receiverPhone: '',
         specialInstructions: '',
+        sendResult: true,
         formErrors: {
           pickUpDate: '',
           myCompanyName: '',
@@ -53,10 +56,12 @@ export default class HireCompany extends Component {
           receiverZip: '',
           receiverPhone: '',
           specialInstructions: '',
-        }
+        },
+        redirect: false,
       }
 
       this.handleChange = this.handleChange.bind(this)
+      this.writeHireData = this.writeHireData.bind(this)
   }
 
   handleChange(event){
@@ -136,17 +141,20 @@ export default class HireCompany extends Component {
 
 
       this.writeHireData(this.state.pickUpDate, this.state.myCompanyName, this.state.address, this.state.city, this.state.state,
-        this.state.zip, this.state.phone, this.state.email, this.state.receiverName, this.state.receiverAddress, this.state.receiverCity,
+        this.state.zip, this.state.phone, this.state.email, this.state.receiverCompanyName, this.state.receiverAddress, this.state.receiverCity,
         this.state.receiverState, this.state.receiverZip, this.state.receiverPhone, this.state.specialInstructions)
 
       //console.log(stateMinusErrors)
     }else{
       console.log('form invalid')
+      this.setState({
+        sendResult: false,
+      })
     }
   }
 
   writeHireData = (pickUpDate, myCompanyName, address, city, state, zip, phone, email, 
-    receiverName, receiverAddress, receiverCity, receiverState, receiverZip, receiverPhone, specialInstructions) => {
+    receiverCompanyName, receiverAddress, receiverCity, receiverState, receiverZip, receiverPhone, specialInstructions) => {
 
     //console.log(this.props.user.uid)
     console.log(pickUpDate)
@@ -157,39 +165,50 @@ export default class HireCompany extends Component {
       city,
       state,
       zip,
-      phone,
-      email,
-      receiverName,
+      receiverCompanyName,
       receiverAddress,
       receiverCity,
       receiverState,
       receiverZip,
-      receiverPhone,
       specialInstructions
     }
 
     console.log('ORDER ' + JSON.stringify(order))
+    
     //order object
     //this order needs to be saved in the orders table, so it can be seen by other companies
     //also needs to have reference, or i can just name the document the title of the company, or user id
 
-    //var database = firebase.firestore();
+    var database = firebase.firestore();
 
-    // database.collection('companies').doc(this.props.user.uid).set(company)
-    // .then(function(docRef) {
-    //   //console.log("Document written with ID: ", docRef.id);
-    //   console.log('doc saved to db')
+    database.collection('orders').doc(this.props.user.uid).set(order)
+    .then((docRef) => {
+      //console.log("Document written with ID: ", docRef.id);
+      console.log('doc saved to db')
       
-    // })
-    // .catch(function(error) {
-    //   console.error("Error adding document: ", error);
-    // });
+      //redirect to dashboard page
+      this.setState({
+        redirect: true,
+      })
+    })
+    .catch(function(error) {
+      console.error("Error adding document: ", error);
+    });
   }
 
 
 
   render() {
     const { formErrors } = this.state;
+
+    if(this.state.redirect){
+      return <Redirect to="/dashboard" />
+    }
+
+    var resultText;
+    if (!this.state.sendResult) {
+      resultText = <h5 className="errorMessage">Please fill out all fields</h5>;
+    }
 
     return (
       <div className="container">
@@ -228,7 +247,7 @@ export default class HireCompany extends Component {
           {formErrors.zip.length > 0 && (
             <span className="errorMessage" data-error="wrong" data-success="right">{formErrors.zip}</span>
           )}
-          <label for="phone">Phone</label>
+          {/* <label for="phone">Phone</label>
           <input onChange={this.handleChange} name="phone" id="phone" className="formInput" type="text"></input>
           {formErrors.phone.length > 0 && (
             <span className="errorMessage" data-error="wrong" data-success="right">{formErrors.phone}</span>
@@ -237,7 +256,7 @@ export default class HireCompany extends Component {
           <input onChange={this.handleChange} name="email" id="email" className="formInput" type="text"></input>
           {formErrors.email.length > 0 && (
             <span className="errorMessage" data-error="wrong" data-success="right">{formErrors.email}</span>
-          )}
+          )} */}
           </div>
 
           <div>
@@ -267,11 +286,11 @@ export default class HireCompany extends Component {
           {formErrors.receiverZip.length > 0 && (
             <span className="errorMessage" data-error="wrong" data-success="right">{formErrors.receiverZip}</span>
           )}
-          <label for="receiverPhone">Phone</label>
+          {/* <label for="receiverPhone">Phone</label>
           <input onChange={this.handleChange} name="receiverPhone" id="receiverPhone" className="formInput" type="text"></input>
           {formErrors.receiverPhone.length > 0 && (
             <span className="errorMessage" data-error="wrong" data-success="right">{formErrors.receiverPhone}</span>
-          )}
+          )} */}
 
           </div>
 
@@ -302,7 +321,11 @@ export default class HireCompany extends Component {
           <h4>Special Instructions</h4>
 
           <textarea onChange={this.handleChange} name="specialInstructions" id="specialInstructions" className="formInput" type="text"></textarea>
+          {
+            resultText
+          }
           <button className="btn">Submit</button>
+
           </div>
           
           
