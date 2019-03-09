@@ -8,6 +8,7 @@ import Home from './components/Home.js';
 import RegisterCompany from './components/RegisterCompany.js'
 import HireCompany from './components/HireCompany.js'
 import Dashboard from './components/Dashboard.js'
+import Listings from './components/Listings.js'
 
 class App extends Component {
   constructor(props){
@@ -54,6 +55,7 @@ class App extends Component {
         {/* <Route exact path="/hire" component={HireCompany} /> */}
         <Route exact path="/login" component={Login} />
         <Route exact path="/dashboard" component={Dashboard} />
+        <Route exact path="/listings" component={Listings} />
       </div>
     );
   }

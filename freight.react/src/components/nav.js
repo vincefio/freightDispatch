@@ -30,7 +30,8 @@ export default class Nav extends Component {
                             <a className="logo">Freight Shipper</a>
                             <ul id="nav-mobile" className="right ">
     
-                            <li className="hide-on-med-and-down"><Link to="/">Home</Link></li>   
+                            <li className="hide-on-med-and-down"><Link to="/">Home</Link></li> 
+                            <li className="hide-on-med-and-down"><Link to="/listings">Listings</Link></li>  
                             <li className="hide-on-med-and-down"><Link to="/dashboard">Dashboard</Link></li>
                         {/*for the logout we need to change the state of the parent */}
                              <li onClick={this.signOut} className="hide-on-med-and-down"><Link to="/">Logout</Link></li>
@@ -41,6 +42,7 @@ export default class Nav extends Component {
                             <ul id='dropdown1' className='dropdown-content'>
                                 <li className=""><Link to="/">Home</Link></li>
                                 <li className=""><Link to="/dashboard">Dashboard</Link></li>
+                                <li className="hide-on-med-and-down"><Link to="/listings">Listings</Link></li>  
                                 <li onClick={this.signOut} className=""><Link to="/">Logout</Link></li>
                             </ul>
     

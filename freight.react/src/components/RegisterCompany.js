@@ -86,9 +86,9 @@ export default class RegisterCompany extends Component {
           })
         break;
       case 'costPerMile':
-          console.log('input hit')
+          //console.log('input hit')
         var r = /^\$?[0-9]+(\.[0-9][0-9])?$/;
-        console.log(r.test(value));  //true
+        //console.log(r.test(value));  //true
         formErrors.costPerMile = !r.test(value) ? 'Please add a valid price (check formatting)' : '';
         break;
       default:
@@ -114,7 +114,7 @@ export default class RegisterCompany extends Component {
         state.registerCompanyState, state.registerCompanyZip, state.deliveryTrucks, state.numberOfTrucks)
 
       this.writeUserData(state.registerCompanyName, state.registerCompanyAddress, state.registerCompanyCity,
-        state.registerCompanyState, state.registerCompanyZip, state.deliveryTrucks, state.numberOfTrucks)
+        state.registerCompanyState, state.registerCompanyZip, state.deliveryTrucks, state.numberOfTrucks, state.costPerMile)
 
 
       //console.log(company)///
@@ -123,7 +123,7 @@ export default class RegisterCompany extends Component {
     }
   }
 
-  writeUserData = (name, address, city, state, zip, deliveryTrucks, numberOfTrucks) => {
+  writeUserData = (name, address, city, state, zip, deliveryTrucks, numberOfTrucks, costPerMile) => {
     console.log(this.props.user.uid)
     var company = {
       name: name,
@@ -133,6 +133,7 @@ export default class RegisterCompany extends Component {
       zip: zip,
       deliveryTrucks: deliveryTrucks,
       numberOfTrucks: numberOfTrucks,
+      costPerMile: costPerMile,
     }
     var database = firebase.firestore();
 
