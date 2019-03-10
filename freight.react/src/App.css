@@ -87,3 +87,11 @@ nav a{
     color: red;
     display: block;
 }
+
+/***********LISTINGS COMPONENT****************/
+/*********************************************/
+.orderWrapper{
+    border: 1px solid black;
+    margin-bottom: 25px;
+    padding: 10px;
+}
