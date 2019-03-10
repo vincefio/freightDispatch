@@ -9,6 +9,7 @@ export default class Listings extends Component {
     console.log(this.props.user.uid)
     this.state = {
       orders: [],
+      orderIds: [],
       userUid: this.props.user.uid,
     }
   }
@@ -24,9 +25,10 @@ export default class Listings extends Component {
     db.collection("orders").get().then((querySnapshot) => {
       querySnapshot.forEach(doc => {
           // doc.data() is never undefined for query doc snapshots
-          //console.log(doc.id, " => ", doc.data());
+          console.log(doc.id, " => ", doc.data());
           this.setState(prevState => ({
-            orders: [...prevState.orders, doc.data()]
+            orders: [...prevState.orders, doc.data()],
+            orderIds: [...prevState.orderIds, doc.id]
           }))
          // console.log(this.state)
 
