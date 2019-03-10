@@ -6,9 +6,10 @@ import axios from 'axios'
 export default class Listings extends Component {
   constructor(props){
     super(props)
-    //console.log(this.props.user.uid)
+    console.log(this.props.user.uid)
     this.state = {
       orders: [],
+      userUid: this.props.user.uid,
     }
   }
 
@@ -38,8 +39,9 @@ export default class Listings extends Component {
           // });
 
       });
-      console.log(this.state)
+      console.log(this.state)    
   });
+  
   }
 
   handleSubmit = (event) => {
@@ -48,11 +50,17 @@ export default class Listings extends Component {
   }
 
   render() {
-    const orders = this.state.orders.map(order => 
-      <li className="orderWrapper" key={order.receiverCompanyName}>
+    //console.log(this.props.user.userUid)
+    const orders = this.state.orders
+    .filter(order => 
+      order.userUid !== this.state.userUid
+    )
+    .map(order => 
+      <li className="orderWrapper" key={order.userUid}>
       <h5 class="">PickUp Date: {order.pickUpDate}</h5>
       <div>Origin: {order.city}, {order.state}</div>
       <div>Destination: {order.receiverCity}, {order.receiverState}</div>
+      <button onClick={this.handleSubmit} className="btn">Deliver this order</button>
       </li>
     )
 
@@ -63,7 +71,6 @@ export default class Listings extends Component {
         <ul className="">
         { orders }
         </ul>
-        <button onClick={this.handleSubmit} className="btn">Deliver this order</button>
       </div>
     )
   }
