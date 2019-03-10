@@ -16,8 +16,8 @@ export default class Listings extends Component {
 
   componentDidMount = () => {
 
-    var elems = document.querySelectorAll('.collapsible');
-    M.Collapsible.init(elems, {});
+    var elems = document.querySelectorAll('.modal');
+    M.Modal.init(elems, {});
     //find all listings from the orders table
     //sort all without the userUid of the current user this.props.user.uid, this will happen locally
     var db = firebase.firestore()
@@ -31,15 +31,6 @@ export default class Listings extends Component {
             orderIds: [...prevState.orderIds, doc.id]
           }))
          // console.log(this.state)
-
-          //   axios.get('https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=Washington,DC&destinations=New+York+City,NY&key=AIzaSyAHYChLr27Si59VaccQ_gqUi_3gZO489ew')
-          //   .then(function (response) {
-          //     console.log(response);
-          //   })
-          //   .catch(function (error) {
-          //     console.log(error);
-          // });
-
       });
       console.log(this.state)    
   });
@@ -48,23 +39,35 @@ export default class Listings extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault()
-    console.log('submit hit')
+    console.log('submit hit ' + event.target.name)
   }
 
   render() {
+    
     //console.log(this.props.user.userUid)
     const orders = this.state.orders
-    .filter(order => 
+    .filter((order) => 
       order.userUid !== this.state.userUid
     )
-    .map(order => 
-      <li className="orderWrapper" key={order.userUid}>
+    .map((order, i) => 
+      <li className="orderWrapper" name={i} key={i}>
       <h5 class="">PickUp Date: {order.pickUpDate}</h5>
       <div>Origin: {order.city}, {order.state}</div>
       <div>Destination: {order.receiverCity}, {order.receiverState}</div>
-      <button onClick={this.handleSubmit} className="btn">Deliver this order</button>
+      <button name={i} onClick={this.handleSubmit} className="btn modal-trigger" href="#modal1">Deliver this order</button>
       </li>
     )
+
+    var modal =  
+    <div id="modal1" class="modal">
+      <div class="modal-content">
+        <h4>Confirm this order</h4>
+        <p>Are you sure you want to make this delivery?</p>
+      </div>
+      <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect waves-green btn-flat">Confirm</a>
+      </div>
+    </div>
 
     return (
       <div className="container">
@@ -72,6 +75,7 @@ export default class Listings extends Component {
         <h3>Bid on orders</h3>
         <ul className="">
         { orders }
+        { modal }
         </ul>
       </div>
     )
