@@ -19,7 +19,7 @@ export default class Listings extends Component {
     var elems = document.querySelectorAll('.modal');
     M.Modal.init(elems, {});
     //find all listings from the orders table
-    //sort all without the userUid of the current user this.props.user.uid, this will happen locally
+    //sort all without the userUid of the current user this.props.user.uid, this will happen locally/
     var db = firebase.firestore()
 
     db.collection("orders").get().then((querySnapshot) => {
