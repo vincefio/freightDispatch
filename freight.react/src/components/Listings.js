@@ -58,6 +58,9 @@ export default class Listings extends Component {
     })
     .then(function() {
         console.log("Document successfully updated!");
+
+        //redirect to dashboard
+        
     })
     .catch(function(error) {
         // The document probably doesn't exist.

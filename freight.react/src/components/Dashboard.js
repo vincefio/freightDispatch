@@ -7,15 +7,22 @@ export default class Dashboard extends Component {
     super(props)
     this.state = {
       myOrders: [],
+      myOrderIds: [],
+      myDeliveries: [],
+      myDeliveryIds: [],
+      currentId: null,
     }
   }
 
   componentDidMount(){
     var elems = document.querySelectorAll('.collapsible');
     M.Collapsible.init(elems, {});
+
+    var elems = document.querySelectorAll('.modal');
+    M.Modal.init(elems, {});
     //get current orders from db
     var database = firebase.firestore();
-    //console.log(this.props.user.uid)
+    console.log(this.props.user.uid)
     //var docRef = database.collection('orders').doc(this.props.user.uid);
 
     database.collection("orders").where("userUid", "==", this.props.user.uid)
@@ -27,7 +34,28 @@ export default class Dashboard extends Component {
             var data = doc.data()
 
             this.setState(prevState => ({
-              myOrders: [...prevState.myOrders, data]
+              myOrders: [...prevState.myOrders, data],
+              myOrderIds: [...prevState.myOrderIds, doc.id]
+            }))
+            //console.log('state ' + JSON.stringify(this.state))
+        });
+    })
+    .catch(function(error) {
+        console.log("Error getting documents: ", error);
+    });
+
+    //get the deliveries
+    database.collection("orders").where("deliverCompany", "==", this.props.user.uid)
+    .get()
+    .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+            // doc.data() is never undefined for query doc snapshots
+            //console.log(doc.id, " => ", doc.data());
+            var data = doc.data()
+
+            this.setState(prevState => ({
+              myDeliveries: [...prevState.myDeliveries, data],
+              myDeliveryIds: [...prevState.myDeliveryIds, doc.id]
             }))
             //console.log('state ' + JSON.stringify(this.state))
         });
@@ -37,29 +65,73 @@ export default class Dashboard extends Component {
     });
   }
 
+  handleChangePickup = (event) => {
+    console.log('handle change pickup' + parseInt(event.target.name))
+    this.setState({
+      currentId: event.target.name,
+    })
+  }
+
+  handleChangeDelivery = (event) => {
+    console.log('handle change delivery' + parseInt(event.target.name))
+    this.setState({
+      currentId: event.target.name,
+    })
+  }
+
+  handleSubmit = (event) => {
+    event.preventDefault()
+    console.log('submit hit ' + event.target.name)
+  }
+
   render() {
-    const myOrders = this.state.myOrders.map(order => 
+    const myOrders = this.state.myOrders.map((order, i) => 
       <li key={order.receiverCompanyName}>
       <div class="collapsible-header">PickUp Date: {order.pickUpDate}</div>
       <div class="collapsible-body">
-      <span>{order.myCompanyName + ' to ' + order.receiverCompanyName}</span>
-     
+      <div>{order.myCompanyName + ' to ' + order.receiverCompanyName}</div>
+      <button name={i} onClick={this.handleChangePickup} className="btn modal-trigger" href="#modal1">Mark complete</button>
       </div>
     </li>
     )
 
+    const myDeliveries = this.state.myDeliveries.map((order, i) => 
+      <li key={order.receiverCompanyName}>
+      <div class="collapsible-header">Delivery Date: {order.pickUpDate}</div>
+      <div class="collapsible-body">
+      <div>{'Pickup from ' + order.address + ' ' + order.city + ', ' + order.state}</div>
+      <div>{'Deliver to ' + order.receiverAddress + ' ' + order.receiverCity + ', ' + order.receiverState}</div>
+      <button name={i} onClick={this.handleChangeDelivery} className="btn modal-trigger" href="#modal1">Mark order complete</button>
+      </div>
+    </li>
+    )
+
+    var modal =  
+    <div id="modal1" class="modal">
+      <div class="modal-content">
+        <h4>Confirm this order</h4>
+        <p>Are you sure you want to mark this order complete?</p>
+      </div>
+      <div class="modal-footer">
+        <a onClick={this.handleSubmit} href="#!" class="modal-close waves-effect waves-green btn-flat">Confirm</a>
+      </div>
+    </div>
+
     return (
       <div className="container">
         <h1>DASHBOARD</h1>
-        <h3>My Outstanding Pickups</h3><span>Click to expand</span>
+        <h3>My Pickups</h3><span>Click to expand</span>
         <ul className="collapsible">
           { myOrders }
         </ul>
 
         <h3>Deliveries</h3><span>Click to expand</span>
         <ul className="collapsible">
-          
+          { myDeliveries }
+         
         </ul>
+
+        { modal }
 
       </div>
     )
