@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import firebase from 'firebase'
 import M from 'materialize-css'
-import axios from 'axios'
 
 export default class Listings extends Component {
   constructor(props){
@@ -11,6 +10,7 @@ export default class Listings extends Component {
       orders: [],
       orderIds: [],
       userUid: this.props.user.uid,
+      currentId: null,
     }
   }
 
@@ -25,14 +25,14 @@ export default class Listings extends Component {
     db.collection("orders").get().then((querySnapshot) => {
       querySnapshot.forEach(doc => {
           // doc.data() is never undefined for query doc snapshots
-          console.log(doc.id, " => ", doc.data());
+          //console.log(doc.id, " => ", doc.data());
           this.setState(prevState => ({
             orders: [...prevState.orders, doc.data()],
             orderIds: [...prevState.orderIds, doc.id]
           }))
          // console.log(this.state)
       });
-      console.log(this.state)    
+      //console.log(this.state)    
   });
   
   }
@@ -40,6 +40,36 @@ export default class Listings extends Component {
   handleSubmit = (event) => {
     event.preventDefault()
     console.log('submit hit ' + event.target.name)
+    console.log(this.state.orders[this.state.currentId])
+    //this.state.orderIds[this.state.currentId]
+
+    //add this listing to the delivery collection, or update orders document with delivery company
+    //delete this order from the orders table
+    //delete this order from the current state
+    var db = firebase.firestore()
+    
+    var thisOrder = this.state.orderIds[this.state.currentId]
+    console.log(thisOrder)
+    var currentOrder = db.collection("orders").doc(`${thisOrder}`);
+
+    // Set the "capital" field of the city 'DC'
+    return currentOrder.update({
+        deliverCompany: this.props.user.uid,
+    })
+    .then(function() {
+        console.log("Document successfully updated!");
+    })
+    .catch(function(error) {
+        // The document probably doesn't exist.
+        console.error("Error updating document: ", error);
+    });
+  }
+
+  handleChange = (event) => {
+    console.log('handle change ' + typeof parseInt(event.target.name))
+    this.setState({
+      currentId: event.target.name,
+    })
   }
 
   render() {
@@ -54,7 +84,7 @@ export default class Listings extends Component {
       <h5 class="">PickUp Date: {order.pickUpDate}</h5>
       <div>Origin: {order.city}, {order.state}</div>
       <div>Destination: {order.receiverCity}, {order.receiverState}</div>
-      <button name={i} onClick={this.handleSubmit} className="btn modal-trigger" href="#modal1">Deliver this order</button>
+      <button name={i} onClick={this.handleChange} className="btn modal-trigger" href="#modal1">Deliver this order</button>
       </li>
     )
 
@@ -65,7 +95,7 @@ export default class Listings extends Component {
         <p>Are you sure you want to make this delivery?</p>
       </div>
       <div class="modal-footer">
-        <a href="#!" class="modal-close waves-effect waves-green btn-flat">Confirm</a>
+        <a onClick={this.handleSubmit} href="#!" class="modal-close waves-effect waves-green btn-flat">Confirm</a>
       </div>
     </div>
 

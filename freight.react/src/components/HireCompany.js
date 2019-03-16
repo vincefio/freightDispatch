@@ -176,7 +176,7 @@ export default class HireCompany extends Component {
       receiverState,
       receiverZip,
       specialInstructions,
-      
+      deliveryCompany: '',
     }
 
     console.log('ORDER ' + JSON.stringify(order))

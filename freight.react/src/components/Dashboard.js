@@ -43,7 +43,7 @@ export default class Dashboard extends Component {
       <div class="collapsible-header">PickUp Date: {order.pickUpDate}</div>
       <div class="collapsible-body">
       <span>{order.myCompanyName + ' to ' + order.receiverCompanyName}</span>
-      <div>Status: </div>
+     
       </div>
     </li>
     )
@@ -51,9 +51,14 @@ export default class Dashboard extends Component {
     return (
       <div className="container">
         <h1>DASHBOARD</h1>
-        <h3>My Outstanding Orders</h3><span>Click to expand</span>
+        <h3>My Outstanding Pickups</h3><span>Click to expand</span>
         <ul className="collapsible">
           { myOrders }
+        </ul>
+
+        <h3>Deliveries</h3><span>Click to expand</span>
+        <ul className="collapsible">
+          
         </ul>
 
       </div>
