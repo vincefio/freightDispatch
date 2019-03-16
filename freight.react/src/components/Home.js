@@ -8,20 +8,20 @@ export default class Home extends Component {
     constructor(props){
         super(props);
 
-        var database = firebase.firestore();
+        // var database = firebase.firestore();
 
-        var docRef = database.collection("companies").doc("chest");
+        // var docRef = database.collection("companies").doc("chest");
 
-        docRef.get().then(function(doc) {
-            if (doc.exists) {
-                console.log("Document data:", doc.data());
-            } else {
-                // doc.data() will be undefined in this case
-                console.log("No such document!");
-            }
-        }).catch(function(error) {
-            console.log("Error getting document:", error);
-        });
+        // docRef.get().then(function(doc) {
+        //     if (doc.exists) {
+        //         console.log("Document data:", doc.data());
+        //     } else {
+        //         // doc.data() will be undefined in this case
+        //         console.log("No such document!");
+        //     }
+        // }).catch(function(error) {
+        //     console.log("Error getting document:", error);
+        // });
 
         this.signOut = this.signOut.bind(this);
         //<img className="backgroundImg" src={Truck} alt="truck"></img>

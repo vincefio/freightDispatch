@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import firebase from 'firebase'
 import M from 'materialize-css'
 
+var database = firebase.firestore();
+
 export default class Dashboard extends Component {
   constructor(props){
     super(props)
@@ -12,6 +14,7 @@ export default class Dashboard extends Component {
       myDeliveryIds: [],
       currentId: null,
       deliveryOrPickup: null,
+      currentDocumentId: null,
     }
   }
 
@@ -22,7 +25,7 @@ export default class Dashboard extends Component {
     var elems = document.querySelectorAll('.modal');
     M.Modal.init(elems, {});
     //get current orders from db
-    var database = firebase.firestore();
+
     console.log(this.props.user.uid)
     //var docRef = database.collection('orders').doc(this.props.user.uid);
 
@@ -82,10 +85,17 @@ export default class Dashboard extends Component {
     })
   }
 
-  handleSubmit = (event) => {
+  handleSubmit = async (event) => {
     event.preventDefault()
     console.log('submit hit ' + event.target.name)
 
+
+    await this.deliveryOrPickup()
+    //delete order
+    this.deleteOrder()
+  }
+
+  deliveryOrPickup = () => {
     if(this.state.deliveryOrPickup == 'pickup'){
       var newOrders = [...this.state.myOrders]
       newOrders.splice(this.state.currentId, 1)
@@ -94,7 +104,9 @@ export default class Dashboard extends Component {
       this.setState(prevState => ({
         myOrders: newOrders,
         myOrderIds: newIds,
+        currentDocumentId: this.state.myDeliveryIds[this.state.currentId]
       }))
+
     }else{
       var newDeliveries = [...this.state.myDeliveries]
       newDeliveries.splice(this.state.currentId, 1)
@@ -103,8 +115,20 @@ export default class Dashboard extends Component {
       this.setState(prevState => ({
         myDeliveries: newDeliveries,
         myDeliveryIds: newDeliveryIds,
+        currentDocumentId: this.state.myOrderIds[this.state.currentId]
       }))
     }
+  }
+
+  deleteOrder = () => {
+      var thisOrder = this.state.currentDocumentId
+      console.log(thisOrder)
+        //delete this order document from db
+        database.collection("orders").doc(`${thisOrder}`).delete().then(function() {
+          console.log("Document successfully deleted!");
+        }).catch(function(error) {
+          console.error("Error removing document: ", error);
+        }); 
   }
 
   render() {

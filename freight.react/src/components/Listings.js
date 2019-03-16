@@ -80,7 +80,7 @@ export default class Listings extends Component {
     //console.log(this.props.user.userUid)
     const orders = this.state.orders
     .filter((order) => 
-      order.userUid !== this.state.userUid
+      order.userUid !== this.state.userUid && order.deliverCompany !== null
     )
     .map((order, i) => 
       <li className="orderWrapper" name={i} key={i}>
