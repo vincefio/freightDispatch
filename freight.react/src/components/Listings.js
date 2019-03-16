@@ -28,11 +28,18 @@ export default class Listings extends Component {
       querySnapshot.forEach(doc => {
           // doc.data() is never undefined for query doc snapshots
           //console.log(doc.id, " => ", doc.data());
-          this.setState(prevState => ({
-            orders: [...prevState.orders, doc.data()],
-            orderIds: [...prevState.orderIds, doc.id]
-          }))
-         // console.log(this.state)
+          
+          if(doc.data().userUid !== this.state.userUid && doc.data().deliverCompany !== ""){
+            if(doc.data().deliverCompany !== null){
+              console.log('not equal')
+            }else{
+              this.setState(prevState => ({
+                orders: [...prevState.orders, doc.data()],
+                orderIds: [...prevState.orderIds, doc.id]
+              }))
+            }
+
+          }
       });
       //console.log(this.state)    
   });
@@ -41,7 +48,7 @@ export default class Listings extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault()
-    console.log('submit hit ' + event.target.name)
+    //console.log('submit hit ' + event.target.name)
     console.log(this.state.orders[this.state.currentId])
     //this.state.orderIds[this.state.currentId]
 
@@ -73,7 +80,7 @@ export default class Listings extends Component {
   }
 
   handleChange = (event) => {
-    console.log('handle change ' + typeof parseInt(event.target.name))
+    console.log('handle change ' + event.target.name)
     this.setState({
       currentId: event.target.name,
     })
