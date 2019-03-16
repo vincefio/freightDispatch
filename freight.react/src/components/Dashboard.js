@@ -11,6 +11,7 @@ export default class Dashboard extends Component {
       myDeliveries: [],
       myDeliveryIds: [],
       currentId: null,
+      deliveryOrPickup: null,
     }
   }
 
@@ -69,6 +70,7 @@ export default class Dashboard extends Component {
     console.log('handle change pickup' + parseInt(event.target.name))
     this.setState({
       currentId: event.target.name,
+      deliveryOrPickup: 'pickup'
     })
   }
 
@@ -76,12 +78,33 @@ export default class Dashboard extends Component {
     console.log('handle change delivery' + parseInt(event.target.name))
     this.setState({
       currentId: event.target.name,
+      deliveryOrPickup: 'delivery'
     })
   }
 
   handleSubmit = (event) => {
     event.preventDefault()
     console.log('submit hit ' + event.target.name)
+
+    if(this.state.deliveryOrPickup == 'pickup'){
+      var newOrders = [...this.state.myOrders]
+      newOrders.splice(this.state.currentId, 1)
+      var newIds = [...this.state.myOrderIds]
+      newIds.splice(this.state.currentId, 1)
+      this.setState(prevState => ({
+        myOrders: newOrders,
+        myOrderIds: newIds,
+      }))
+    }else{
+      var newDeliveries = [...this.state.myDeliveries]
+      newDeliveries.splice(this.state.currentId, 1)
+      var newDeliveryIds = [...this.state.myDeliveryIds]
+      newDeliveryIds.splice(this.state.currentId, 1)
+      this.setState(prevState => ({
+        myDeliveries: newDeliveries,
+        myDeliveryIds: newDeliveryIds,
+      }))
+    }
   }
 
   render() {
