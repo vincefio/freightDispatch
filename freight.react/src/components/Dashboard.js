@@ -96,7 +96,9 @@ export default class Dashboard extends Component {
   }
 
   deliveryOrPickup = () => {
+    //console.log('delivery or pickup')
     if(this.state.deliveryOrPickup == 'pickup'){
+      console.log('pickup')
       var newOrders = [...this.state.myOrders]
       newOrders.splice(this.state.currentId, 1)
       var newIds = [...this.state.myOrderIds]
@@ -108,6 +110,7 @@ export default class Dashboard extends Component {
       }))
 
     }else{
+      console.log('delivery')
       var newDeliveries = [...this.state.myDeliveries]
       newDeliveries.splice(this.state.currentId, 1)
       var newDeliveryIds = [...this.state.myDeliveryIds]

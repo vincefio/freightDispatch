@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import firebase from 'firebase'
 import M from 'materialize-css'
+import { Redirect } from 'react-router'
 
 export default class Listings extends Component {
   constructor(props){
@@ -11,6 +12,7 @@ export default class Listings extends Component {
       orderIds: [],
       userUid: this.props.user.uid,
       currentId: null,
+      redirect: false,
     }
   }
 
@@ -56,11 +58,13 @@ export default class Listings extends Component {
     return currentOrder.update({
         deliverCompany: this.props.user.uid,
     })
-    .then(function() {
+    .then(() => {
         console.log("Document successfully updated!");
 
         //redirect to dashboard
-        
+        this.setState({
+          redirect: true
+        })
     })
     .catch(function(error) {
         // The document probably doesn't exist.
@@ -102,7 +106,12 @@ export default class Listings extends Component {
       </div>
     </div>
 
+    if(this.state.redirect){
+      return <Redirect to="/dashboard" />
+    }
+
     return (
+      
       <div className="container">
         <h1>LISTINGS</h1>
         <h3>Bid on orders</h3>

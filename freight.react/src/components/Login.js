@@ -43,20 +43,17 @@ export default class Login extends Component {
           });
     }
 
-    componentDidMount() {
-
-
-    }
-
-    handleSubmit(event){
-
-    }
 
     render() {
         return (
-            <div>
+            <div  className="container">
                 <h1>LOGIN FORM</h1>
-                <div className="container">
+                <div>Seed Data:
+                </div>
+                <div>username: amazingperson@amazing.com </div>
+                <div>password: password</div>
+                
+                <div>
                 <form onSubmit={this.handleSubmit}>
 
                 <div className="input-field col s12">
