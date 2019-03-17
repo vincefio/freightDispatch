@@ -64,8 +64,8 @@ export default class Login extends Component {
                     <input value={this.state.password} onChange={this.handleChange} name="password" id="password" type="password" className="validate"></input>
                     
                 </div>
-                <button id='flashcard-submit' onClick={this.login} className="btn waves-effect waves-light submitButton" value="Submit">Login</button>
-                <button id='flashcard-submit' onClick={this.signUp} className="btn waves-effect waves-light submitButton" >Sign Up</button>
+                <button id='login' onClick={this.login} className="btn waves-effect waves-light submitButton" value="Submit">Login</button>
+                <button id='signUp' onClick={this.signUp} className="btn waves-effect waves-light submitButton" >Sign Up</button>
                 </form>
                 </div>
             </div>

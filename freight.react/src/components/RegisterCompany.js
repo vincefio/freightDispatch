@@ -255,7 +255,7 @@ export default class RegisterCompany extends Component {
               ''
             }
 
-            <button className="button">Submit</button>
+            <button id="registerButton" className="button btn">Submit</button>
           </form>
       </div>
     )

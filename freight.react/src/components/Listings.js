@@ -93,7 +93,7 @@ export default class Listings extends Component {
       <h5 class="">PickUp Date: {order.pickUpDate}</h5>
       <div>Origin: {order.city}, {order.state}</div>
       <div>Destination: {order.receiverCity}, {order.receiverState}</div>
-      <button name={i} onClick={this.handleChange} className="btn modal-trigger" href="#modal1">Deliver this order</button>
+      <button name={i} onClick={this.handleChange} className="btn modal-trigger deliverButton" href="#modal1">Deliver this order</button>
       </li>
     )
 

@@ -140,7 +140,7 @@ export default class Dashboard extends Component {
       <div class="collapsible-header">PickUp Date: {order.pickUpDate}</div>
       <div class="collapsible-body">
       <div>{order.myCompanyName + ' to ' + order.receiverCompanyName}</div>
-      <button name={i} onClick={this.handleChangePickup} className="btn modal-trigger" href="#modal1">Mark complete</button>
+      <button name={i} onClick={this.handleChangePickup} className="btn modal-trigger deliverButton" href="#modal1">Mark complete</button>
       </div>
     </li>
     )
@@ -151,7 +151,7 @@ export default class Dashboard extends Component {
       <div class="collapsible-body">
       <div>{'Pickup from ' + order.address + ' ' + order.city + ', ' + order.state}</div>
       <div>{'Deliver to ' + order.receiverAddress + ' ' + order.receiverCity + ', ' + order.receiverState}</div>
-      <button name={i} onClick={this.handleChangeDelivery} className="btn modal-trigger" href="#modal1">Mark order complete</button>
+      <button name={i} onClick={this.handleChangeDelivery} className="btn modal-trigger deliverButton" href="#modal1">Mark order complete</button>
       </div>
     </li>
     )

@@ -9,6 +9,19 @@ nav a{
     font-weight: 600;
 }
 
+/*************LOGIN*******************/
+#login{
+    margin-right: 10px;
+}
+
+#registerButton{
+    margin-top: 8px;
+}
+
+.deliverButton{
+    margin-top: 7px;
+}
+
 /*******HOME PAGE STYLING****************/
 /****************************************/
 
