@@ -29,16 +29,11 @@ export default class Listings extends Component {
           // doc.data() is never undefined for query doc snapshots
           //console.log(doc.id, " => ", doc.data());
           
-          if(doc.data().userUid !== this.state.userUid && doc.data().deliverCompany !== ""){
-            if(doc.data().deliverCompany !== null){
-              console.log('not equal')
-            }else{
-              this.setState(prevState => ({
-                orders: [...prevState.orders, doc.data()],
-                orderIds: [...prevState.orderIds, doc.id]
-              }))
-            }
-
+          if(doc.data().userUid !== this.state.userUid && doc.data().deliverCompany === null){
+            this.setState(prevState => ({
+              orders: [...prevState.orders, doc.data()],
+              orderIds: [...prevState.orderIds, doc.id]
+            }))
           }
       });
       //console.log(this.state)    
@@ -90,9 +85,9 @@ export default class Listings extends Component {
     
     //console.log(this.props.user.userUid)
     const orders = this.state.orders
-    .filter((order) => 
-      order.userUid !== this.state.userUid && order.deliverCompany !== null
-    )
+    // .filter((order) => 
+    //   order.userUid !== this.state.userUid && order.deliverCompany !== null
+    // )
     .map((order, i) => 
       <li className="orderWrapper" name={i} key={i}>
       <h5 class="">PickUp Date: {order.pickUpDate}</h5>

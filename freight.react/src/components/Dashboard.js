@@ -92,7 +92,7 @@ export default class Dashboard extends Component {
 
     await this.deliveryOrPickup()
     //delete order
-    this.deleteOrder()
+    await this.deleteOrder()
   }
 
   deliveryOrPickup = () => {
